@@ -28,14 +28,56 @@ module.exports = function(grunt) {
                 }
             }
         },
+        connect: {
+            server: {
+                options: {
+                    port: 8002,
+                    hostname: 'localhost',
+                    base:'dist/',
+                    livereload: true
+                }
+            }
+        },
+        copy: {
+            main: {
+                expand: true,
+                cwd: 'src/',
+                src: 'templates/**.html',
+                dest: 'dist/',
+                flatten: true,
+                filter: 'isFile'
+            }
+        },
+        wiredep: {
+
+            task: {
+
+                // Point to the files that should be updated when
+                // you run `grunt wiredep`
+                src: [
+                    'src/templates/**/*.html' // .html support...
+                ],
+
+                options: {
+                    // See wiredep's configuration documentation for the options
+                    // you may pass:
+
+                    // https://github.com/taptapship/wiredep#configuration
+                }
+            }
+        },
         watch: {
             gruntfile: {
                 files: 'Gruntfile.js',
                 tasks: ['jshint:gruntfile']
             },
+            options:{
+                livereload:true,
+                spawn:false
+            },
             src: {
-                files: ['src/js/*.js', 'src/scss/*.scss'],
-                tasks:['sass', 'concat']
+                files: ['src/js/*.js', 'src/scss/*.scss' , 'src/templates/*.html'],
+                tasks:['sass', 'concat','copy','connect']
             }
         }
 
@@ -46,8 +88,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-wiredep');
 
     // Default task(s).
-    grunt.registerTask('default', ['concat','sass','watch']);
+    grunt.registerTask('default', ['wiredep','concat','sass', 'copy','connect','watch']);
 
 };
