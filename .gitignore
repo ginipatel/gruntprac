@@ -3,6 +3,5 @@
 .idea/modules.xml
 .idea/workspace.xml
 .sass-cache/
-bower.json
 dist/css/style.css.map
 node_modules/
