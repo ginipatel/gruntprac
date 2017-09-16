@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                 options: {
                     port: 8002,
                     hostname: 'localhost',
-                    base:'dist/',
+                    base:'dist',
                     livereload: true
                 }
             }
@@ -57,12 +57,17 @@ module.exports = function(grunt) {
                 src: [
                     'src/templates/**/*.html' // .html support...
                 ],
-
-                options: {
-                    // See wiredep's configuration documentation for the options
-                    // you may pass:
-
-                    // https://github.com/taptapship/wiredep#configuration
+                ignorePath: '../../dist/'
+            }
+        },
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['env']
+            },
+            dist: {
+                files: {
+                    'dist/js/app.js': 'src/js/app.js'
                 }
             }
         },
@@ -77,7 +82,7 @@ module.exports = function(grunt) {
             },
             src: {
                 files: ['src/js/*.js', 'src/scss/*.scss' , 'src/templates/*.html'],
-                tasks:['sass', 'concat','copy','connect']
+                tasks:['sass', 'concat','babel','copy','connect']
             }
         }
 
@@ -91,8 +96,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-babel');
 
     // Default task(s).
-    grunt.registerTask('default', ['wiredep','concat','sass', 'copy','connect','watch']);
+    grunt.registerTask('default', ['wiredep','concat','sass','babel', 'copy','connect','watch']);
 
 };
