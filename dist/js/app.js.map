@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/js/app.js"],"names":["a","b","console","log"],"mappings":";;IAAOA,C,GAAQ,C;IAANC,C,GAAQ,C;;AACjBC,QAAQC,GAAR,CAAYH,CAAZ,EAAcC,CAAd","file":"app.js","sourcesContent":["const [a,b] = [1,2];\nconsole.log(a,b)"]}
